@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hope - Login</title>
+  <title>Hope - Doações</title>
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="css/bootstrap.css">
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
   <div class="hero_area">
     <!-- Header -->
@@ -18,7 +16,7 @@
       <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container">
           <a class="navbar-brand" href="../index.html">
-            <img src="images/logo.png" alt="Hope" />
+            <img src="css/images/logo.png" alt="Hope" />
             <span>Hope</span>
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -34,7 +32,7 @@
                 <li class="nav-item">
                   <a class="nav-link" href="cadastro.html">Cadastre-se</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a class="nav-link" href="login.html">Login</a>
                 </li>
               </ul>
@@ -44,27 +42,38 @@
       </div>
     </header>
 
-    <!-- Login Section -->
+    <!-- Doação -->
     <section class="about_section layout_padding">
       <div class="container">
         <div class="heading_container">
-          <h2>Login</h2>
+          <h2>Registrar Doação</h2>
         </div>
 
         <div id="alert" class="alert d-none" role="alert"></div>
 
-        <form id="loginForm">
+        <form id="doacaoForm">
           <div class="form-group">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu e-mail" required>
+            <label for="doador">Nome do Doador</label>
+            <input type="text" id="doador" name="doador" class="form-control" required />
           </div>
 
           <div class="form-group">
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha" required>
+            <label for="tipo">Tipo de Item</label>
+            <select id="tipo" name="tipo" class="form-control" required>
+              <option value="">Selecione...</option>
+              <option value="alimento">Alimento</option>
+              <option value="roupa">Roupa</option>
+              <option value="higiene">Produto de Higiene</option>
+              <option value="outro">Outro</option>
+            </select>
           </div>
 
-          <button type="submit" class="btn btn-primary">Entrar</button>
+          <div class="form-group">
+            <label for="quantidade">Quantidade</label>
+            <input type="number" id="quantidade" name="quantidade" class="form-control" required min="1" />
+          </div>
+
+          <button type="submit" class="btn btn-success">Enviar Doação</button>
         </form>
       </div>
     </section>
@@ -91,41 +100,43 @@
   <script src="js/bootstrap.js"></script>
 
   <script>
-    const form = document.getElementById('loginForm');
+    const form = document.getElementById('doacaoForm');
     const alertBox = document.getElementById('alert');
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
 
       const data = {
-        email: form.email.value,
-        senha: form.senha.value
+        doador: form.doador.value,
+        tipo: form.tipo.value,
+        quantidade: form.quantidade.value
       };
 
-      fetch('../backend/cadastros/login.php', { // ajuste o caminho conforme sua estrutura
+      fetch('../backend/doacoes/doar.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
       })
-      .then(response => response.json())
-      .then(result => {
-        if (result.success) {
-            window.location.href = "doacao.html";            
-        } else {
+        .then(res => res.json())
+        .then(result => {
+          if (result.success) {
+            alertBox.className = "alert alert-success";
+            alertBox.innerText = "Doação registrada com sucesso!";
+            form.reset();
+          } else {
+            alertBox.className = "alert alert-danger";
+            alertBox.innerText = result.message || "Erro ao registrar doação.";
+          }
+          alertBox.classList.remove("d-none");
+        })
+        .catch(() => {
           alertBox.className = "alert alert-danger";
-          alertBox.innerText = result.message || "Falha ao realizar login.";
-          alertBox.classList.remove('d-none');
-        }
-      })
-      .catch(error => {
-        alertBox.className = "alert alert-danger";
-        alertBox.innerText = "Erro de conexão.";
-        alertBox.classList.remove('d-none');
-      });
+          alertBox.innerText = "Erro de conexão com o servidor.";
+          alertBox.classList.remove("d-none");
+        });
     });
   </script>
-
 </body>
 </html>
