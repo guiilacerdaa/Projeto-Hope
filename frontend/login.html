@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hope - Login</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="hero_area">
+    <!-- Header -->
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container">
+          <a class="navbar-brand" href="../index.html">
+            <img src="images/logo.png" alt="Hope" />
+            <span>Hope</span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="../index.html">Início</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="cadastro.html">Cadastre-se</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="login.html">Login</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Login Section -->
+    <section class="about_section layout_padding">
+      <div class="container">
+        <div class="heading_container">
+          <h2>Login</h2>
+        </div>
+
+        <div id="alert" class="alert d-none" role="alert"></div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Digite seu e-mail" required>
+          </div>
+
+          <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Entrar</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <section class="info_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Fale Conosco</h5>
+          <p>Email: contato@hope.org<br>Telefone: (11) 99999-9999</p>
+        </div>
+        <div class="col-md-6">
+          <h5>Redes Sociais</h5>
+          <p>Instagram | Facebook | Twitter</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JavaScript -->
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const alertBox = document.getElementById('alert');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const data = {
+        email: form.email.value,
+        senha: form.senha.value
+      };
+
+      fetch('../backend/cadastros/login.php', { // ajuste o caminho conforme sua estrutura
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(result => {
+        if (result.success) {
+          window.location.href = "painel.html"; // ou qualquer página protegida após login
+        } else {
+          alertBox.className = "alert alert-danger";
+          alertBox.innerText = result.message || "Falha ao realizar login.";
+          alertBox.classList.remove('d-none');
+        }
+      })
+      .catch(error => {
+        alertBox.className = "alert alert-danger";
+        alertBox.innerText = "Erro de conexão.";
+        alertBox.classList.remove('d-none');
+      });
+    });
+  </script>
+
+</body>
+</html>
