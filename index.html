@@ -25,7 +25,7 @@
             telefone: document.getElementById('telefone').value
         };
 
-        fetch('backend/instituicoes/cadastro.php', {
+        fetch('backend/cadastros/cadastro.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dados)
