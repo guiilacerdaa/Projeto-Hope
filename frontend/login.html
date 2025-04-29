@@ -102,7 +102,7 @@
         senha: form.senha.value
       };
 
-      fetch('../backend/cadastros/login.php', { // ajuste o caminho conforme sua estrutura
+      fetch('../backend/cadastros/login.php', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -112,7 +112,17 @@
       .then(response => response.json())
       .then(result => {
         if (result.success) {
-            window.location.href = "doacao.html";            
+          if (result.success) {
+  // salva no localStorage
+  localStorage.setItem("usuario_logado", "true");
+  localStorage.setItem("usuario_nome", result.nome || "");
+  
+
+  
+  window.location.href = "../index.html";
+}
+
+            window.location.href = "../index.html"           
         } else {
           alertBox.className = "alert alert-danger";
           alertBox.innerText = result.message || "Falha ao realizar login.";

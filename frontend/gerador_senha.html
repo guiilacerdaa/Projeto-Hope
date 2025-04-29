@@ -1,0 +1,58 @@
+<!-- frontend/gerador_senha.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gerador de Senha - Hope</title>
+
+  <link rel="stylesheet" href="css/bootstrap.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Poppins:400,700|Roboto:400,700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="hero_area">
+    <header class="header_section">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg custom_nav-container">
+          <a class="navbar-brand" href="../index.html">
+            <img src="images/logo.png" alt="Hope" />
+            <span>Hope</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="slider_section layout_padding">
+      <div class="container">
+        <div class="detail-box">
+          <h1>Gerador de Senha</h1>
+          <p>Clique no botão abaixo para gerar uma senha única de entrega:</p>
+          <div class="btn-box">
+            <button class="btn-1" onclick="gerarSenha()">Gerar Senha</button>
+            <p id="senhaGerada" style="margin-top: 20px; font-size: 1.5rem;"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function gerarSenha() {
+      fetch('../backend/gerar_senha.php')
+        .then(response => response.text())
+        .then(senha => {
+          document.getElementById('senhaGerada').innerText = 'Senha: ' + senha;
+        })
+        .catch(error => {
+          document.getElementById('senhaGerada').innerText = 'Erro ao gerar senha';
+          console.error('Erro:', error);
+        });
+    }
+  </script>
+</body>
+
+</html>

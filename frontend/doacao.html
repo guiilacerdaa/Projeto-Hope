@@ -1,3 +1,4 @@
+<!-- Atualizado: doacao.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -53,8 +54,20 @@
 
         <form id="doacaoForm">
           <div class="form-group">
-            <label for="doador">Nome do Doador</label>
-            <input type="text" id="doador" name="doador" class="form-control" required />
+            <label for="nome">Nome do Doador</label>
+            <input type="text" id="nome" name="nome" class="form-control" required />
+          </div>
+
+          <div class="form-group">
+            <label for="instituicao_id">Instituição</label>
+            <select id="instituicao_id" name="instituicao_id" class="form-control" required>
+              <option value="">Selecione uma instituição...</option>
+              <option value="TELETON">TELETON</option>
+              <option value="Criança Esperança">Criança Esperança</option>
+              <option value="Instituição Ayrton Senna">Instituição Ayrton Senna</option>
+              <option value="Ação Cidadania">Ação Cidadania</option>
+              <option value="McDia Feliz">McDia Feliz</option>
+            </select>
           </div>
 
           <div class="form-group">
@@ -70,7 +83,25 @@
 
           <div class="form-group">
             <label for="quantidade">Quantidade</label>
-            <input type="number" id="quantidade" name="quantidade" class="form-control" required  />
+            <input type="number" id="quantidade" name="quantidade" class="form-control" required />
+          </div>
+
+          <div class="form-group">
+            <label for="locais">Local de Retirada</label>
+            <select id="locais" name="locais" class="form-control" required>
+              <option value="">Selecione um local...</option>
+              <option value="Hospital da Criança de Brasília José Alencar">Hospital da Criança de Brasília José Alencar</option>
+              <option value="Hospital Universitário de Brasília">Hospital Universitário de Brasília</option>
+              <option value="Parque da Cidade Sarah Kubitschek">Parque da Cidade Sarah Kubitschek</option>
+              <option value="Shopping Pier 21">Shopping Pier 21</option>
+              <option value="Rede Sarah de Hospitais de Reabilitação">Rede Sarah de Hospitais de Reabilitação</option>
+            </select>
+          </div>
+          
+
+          <div class="form-group">
+            <label for="descricao">Detalhe a sua doação</label>
+            <textarea id="descricao" name="descricao" class="form-control" rows="4" required></textarea>
           </div>
 
           <button type="submit" class="btn btn-success">Enviar Doação</button>
@@ -107,36 +138,32 @@
       e.preventDefault();
 
       const data = {
-        instituicao_id: form.doador.value,
+        nome: form.nome.value,
+        instituicao_id: form.instituicao_id.value,
         tipo: form.tipo.value,
-        nome: form.doador.value, 
-        quantidade: form.quantidade.value
+        quantidade: form.quantidade.value,
+        descricao: form.descricao.value,
+        locais: form.locais.value
+
       };
 
       fetch('../backend/doacao/doacao.php', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       })
-        .then(res => res.json())
-        .then(result => {
-          if (result.success) {
-            alertBox.className = "alert alert-success";
-            alertBox.innerText = "Doação registrada com sucesso!";
-            form.reset();
-          } else {
-            alertBox.className = "alert alert-danger";
-            alertBox.innerText = result.message || "Erro ao registrar doação.";
-          }
-          alertBox.classList.remove("d-none");
-        })
-        .catch(() => {
-          alertBox.className = "alert alert-danger";
-          alertBox.innerText = "Erro de conexão com o servidor.";
-          alertBox.classList.remove("d-none");
-        });
+      .then(res => res.json())
+      .then(result => {
+        alertBox.className = result.success ? "alert alert-success" : "alert alert-danger";
+        alertBox.innerText = result.message || (result.success ? "Doação registrada!" : "Erro ao registrar doação.");
+        alertBox.classList.remove("d-none");
+        if (result.success) form.reset();
+      })
+      .catch(() => {
+        alertBox.className = "alert alert-danger";
+        alertBox.innerText = "Erro de conexão com o servidor.";
+        alertBox.classList.remove("d-none");
+      });
     });
   </script>
 </body>

@@ -24,7 +24,12 @@ try {
         // session_start();
         // $_SESSION['usuario_id'] = $usuario['id'];
 
-        echo json_encode(["success" => true, "nome" => $usuario['nome']]);
+        echo json_encode([
+            "success" => true,
+            "nome" => $usuario['nome'],
+            "id" => $usuario['id']
+        ]);
+        
     } else {
         echo json_encode(["success" => false, "message" => "E-mail ou senha inválidos."]);
     }
