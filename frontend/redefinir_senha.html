@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Redefinir Senha - Hope</title>
+  <link rel="stylesheet" href="css/bootstrap.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>Redefinir Senha</h2>
+    <p>Informe o seu e-mail cadastrado para redefinir sua senha:</p>
+    <form id="formRedefinir">
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" class="form-control" id="email" required />
+      </div>
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+    <div id="mensagem" class="mt-3"></div>
+  </div>
+
+  <script>
+    document.getElementById("formRedefinir").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+
+      // Simula envio
+      setTimeout(() => {
+        document.getElementById("mensagem").innerHTML =
+          `<div class="alert alert-success">O e-mail foi enviado para sua conta com sucesso.</div>`;
+        document.getElementById("formRedefinir").reset();
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

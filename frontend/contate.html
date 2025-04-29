@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Brighton - Contato</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <link href="css/style.css" rel="stylesheet" />
+  <link href="css/responsive.css" rel="stylesheet" />
+</head>
+<body class="sub_page">
+  <div class="hero_area">
+    <!-- cabeçalho omitido para foco -->
+  </div>
+
+  <!-- seção de contato -->
+  <section class="contact_section layout_padding">
+    <div class="container">
+      <div class="heading_container">
+        <h2>JUNTE-SE <span>A ESPERANÇA</span></h2>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <form action="../backend/contate.php" method="POST">
+            <div>
+              <input type="text" name="nome" placeholder="Nome da Instituição" required />
+            </div>
+            <div>
+              <input type="email" name="email" placeholder="Email" required />
+            </div>
+            <div>
+              <input type="text" name="telefone" placeholder="Número de Telefone" required />
+            </div>
+            <div>
+              <input type="text" name="mensagem" class="message-box" placeholder="Faça sua solicitação" required />
+            </div>
+            <div class="d-flex mt-4">
+              <button type="submit">ENVIAR</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+</body>
+</html>

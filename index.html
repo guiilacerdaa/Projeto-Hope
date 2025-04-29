@@ -68,7 +68,7 @@
               <h1>Hope <br /><span>Solidariedade em Movimento</span></h1>
               <p>Conectamos instituições que precisam de ajuda com voluntários e doadores, de forma prática e segura. Armários inteligentes e entregas solidárias para quem mais precisa.</p>
               <div class="btn-box">
-                <a href="frontend/cadastro.html" class="btn-1">Cadastre-se</a>
+                <a href="frontend/contate.html" class="btn-1">Cadastre-se</a>
                 <a href="frontend/login.html" class="btn-2">Entrar</a>
               </div>
             </div>
@@ -113,16 +113,23 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const usuarioLogado = localStorage.getItem("usuario_logado");
+      const navList = document.querySelector(".navbar-nav");
   
       if (usuarioLogado === "true") {
-        // Remove o botão "Login"
+        // Remove botão "Login"
         const loginLink = document.querySelector('a[href="frontend/login.html"]');
         if (loginLink && loginLink.parentElement) {
           loginLink.parentElement.remove();
         }
   
-        // Adiciona o botão "Sair"
-        const navList = document.querySelector(".navbar-nav");
+        // Troca "Cadastre-se" por "Doar"
+        const cadastroLink = document.querySelector('a[href="frontend/cadastro.html"]');
+        if (cadastroLink) {
+          cadastroLink.href = "frontend/doacao.html";
+          cadastroLink.textContent = "Doar";
+        }
+  
+        // Adiciona botão "Sair"
         if (navList) {
           const logoutItem = document.createElement("li");
           logoutItem.classList.add("nav-item");
@@ -130,16 +137,23 @@
           logoutItem.innerHTML = `<a class="nav-link" href="#" id="logoutBtn">Sair</a>`;
           navList.appendChild(logoutItem);
   
-          // Ao clicar em "Sair", remove dados e recarrega a página
           document.getElementById("logoutBtn").addEventListener("click", () => {
             localStorage.removeItem("usuario_logado");
             localStorage.removeItem("usuario_nome");
             location.reload();
           });
         }
+      } else {
+        // Se não estiver logado, remove botão "Entrega"
+        const entregaLink = document.querySelector('a[href="frontend/gerador_senha.html"]');
+        if (entregaLink && entregaLink.parentElement) {
+          entregaLink.parentElement.remove();
+        }
       }
     });
   </script>
+  
+
   
   
   
