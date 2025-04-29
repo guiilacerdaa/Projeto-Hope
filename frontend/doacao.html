@@ -70,7 +70,7 @@
 
           <div class="form-group">
             <label for="quantidade">Quantidade</label>
-            <input type="number" id="quantidade" name="quantidade" class="form-control" required min="1" />
+            <input type="number" id="quantidade" name="quantidade" class="form-control" required  />
           </div>
 
           <button type="submit" class="btn btn-success">Enviar Doação</button>
@@ -107,12 +107,13 @@
       e.preventDefault();
 
       const data = {
-        doador: form.doador.value,
+        instituicao_id: form.doador.value,
         tipo: form.tipo.value,
+        nome: form.doador.value, 
         quantidade: form.quantidade.value
       };
 
-      fetch('../backend/doacoes/doar.php', {
+      fetch('../backend/doacao/doacao.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
