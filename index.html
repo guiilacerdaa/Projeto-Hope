@@ -68,7 +68,7 @@
               <h1>Hope <br /><span>Solidariedade em Movimento</span></h1>
               <p>Conectamos instituições que precisam de ajuda com voluntários e doadores, de forma prática e segura. Armários inteligentes e entregas solidárias para quem mais precisa.</p>
               <div class="btn-box">
-                <a href="frontend/contate.html" class="btn-1">Cadastre-se</a>
+                <a href="frontend/cadastro.html" class="btn-1">Cadastre-se</a>
                 <a href="frontend/login.html" class="btn-2">Entrar</a>
               </div>
             </div>
@@ -98,8 +98,6 @@
           <p>Email: contato@hope.org<br>Telefone: (11) 99999-9999</p>
         </div>
         <div class="col-md-6">
-          <h5>Redes Sociais</h5>
-          <p>Instagram | Facebook | Twitter</p>
         </div>
       </div>
     </div>
@@ -115,6 +113,7 @@
       const usuarioLogado = localStorage.getItem("usuario_logado");
       const navList = document.querySelector(".navbar-nav");
   
+      // Verifica se o usuário está logado
       if (usuarioLogado === "true") {
         // Remove botão "Login"
         const loginLink = document.querySelector('a[href="frontend/login.html"]');
@@ -133,7 +132,6 @@
         if (navList) {
           const logoutItem = document.createElement("li");
           logoutItem.classList.add("nav-item");
-  
           logoutItem.innerHTML = `<a class="nav-link" href="#" id="logoutBtn">Sair</a>`;
           navList.appendChild(logoutItem);
   
@@ -143,8 +141,30 @@
             location.reload();
           });
         }
+  
+        // Troca os textos dos botões na section slider
+        const btn1 = document.querySelector(".btn-box .btn-1");
+        const btn2 = document.querySelector(".btn-box .btn-2");
+  
+        if (btn1) {
+          btn1.textContent = "Contate-nos";
+          btn1.href = "frontend/contate.html";
+        }
+  
+        if (btn2) {
+          btn2.textContent = "Gerar Senha";
+          btn2.href = "frontend/gerador_senha.html";
+        }
       } else {
-        // Se não estiver logado, remove botão "Entrega"
+        // Quando o usuário não estiver logado
+        // Se o usuário não estiver logado, garante que o link e o texto do "Cadastre-se" não mudem
+        const cadastroLink = document.querySelector('a[href="frontend/cadastro.html"]');
+        if (cadastroLink) {
+          cadastroLink.textContent = "Cadastre-se";  // O texto do link retorna ao padrão "Cadastre-se"
+          cadastroLink.href = "frontend/cadastro.html";  // O link volta para a página de cadastro
+        }
+  
+        // Se não estiver logado, remove o link "Gerar Senha"
         const entregaLink = document.querySelector('a[href="frontend/gerador_senha.html"]');
         if (entregaLink && entregaLink.parentElement) {
           entregaLink.parentElement.remove();
@@ -152,9 +172,7 @@
       }
     });
   </script>
-  
-
-  
+    
   
   
 </body>

@@ -572,4 +572,24 @@ a:focus {
 .footer_section a {
   color: #fefdfc;
 }
+/* Adiciona uma bandeira do Brasil ao lado do formulário */
+.contact_section .row {
+  position: relative;
+}
+
+.contact_section .row::before {
+  content: "";
+  position: absolute;
+  left: -80; /* ou right: -80px se quiser do outro lado */
+  top: 0;
+  width: 64px;
+  height: 48px;
+  background-image: url('../images/mapa.png'); /* caminho relativo */
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.contact_section .row {
+  min-height: 1000px; 
+}
+
 /*# sourceMappingURL=style.css.map */
